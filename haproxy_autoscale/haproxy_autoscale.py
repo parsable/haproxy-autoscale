@@ -102,7 +102,7 @@ def restart_haproxy(args):
         command = '''%s -p %s -f %s -sf %s''' % (args.haproxy, args.pid, args.output, pid or '')
     
     else:
-        command = "service %s restart" % args.servicename
+        command = "/etc/init.d/%s reload" % args.servicename
     
     logging.debug('Executing: %s' % command)
     subprocess.call(command, shell=True)    
