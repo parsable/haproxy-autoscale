@@ -12,6 +12,7 @@ def parse_args():
     parser.add_argument('--security-group', required=True, nargs='+', type=str)
     parser.add_argument('--access-key', required=True)
     parser.add_argument('--secret-key', required=True)
+    parser.add_argument('--reload', default=True, required=False)
     parser.add_argument('--region', default=None,
                         help='Defaults to all regions if not specified.')
     parser.add_argument('--output', default='haproxy.cfg',
@@ -69,8 +70,8 @@ def main(args):
         file_contents(filename=args.output,
                       content=generate_haproxy_config(template=args.template,
                                                       instances=instances    ))
-        
-        restart_haproxy(args)
+        if args.reload: 
+          restart_haproxy(args)
         
     else:
         logging.info('Configuration unchanged. Skipping restart.')
